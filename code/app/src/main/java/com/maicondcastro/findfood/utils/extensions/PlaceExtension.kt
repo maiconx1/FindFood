@@ -1,4 +1,4 @@
-package com.maicondcastro.findfood.extensions
+package com.maicondcastro.findfood.utils.extensions
 
 import com.maicondcastro.findfood.database.dto.PlaceDto
 import com.maicondcastro.findfood.domain.models.Place

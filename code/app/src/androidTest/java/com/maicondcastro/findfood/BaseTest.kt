@@ -4,13 +4,13 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.maicondcastro.findfood.database.PlaceDatabase
+import com.maicondcastro.findfood.domain.PlacesDataSource
 import com.maicondcastro.findfood.domain.repository.PlacesRepository
 import com.maicondcastro.findfood.network.PlacesApiService
 import com.maicondcastro.findfood.network.PlacesHttpClient
 import com.maicondcastro.findfood.network.PlacesRemoteDataSource
 import com.maicondcastro.findfood.network.repository.PlacesRemoteRepository
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.maicondcastro.findfood.utils.Constants
 import org.junit.After
 import org.junit.Before
 import org.koin.android.ext.koin.androidContext
@@ -66,6 +66,7 @@ interface BaseTest : KoinTest {
                 ).build().placeDao }
 
             single<PlacesRemoteDataSource> { PlacesRemoteRepository(get(), get()) }
+            single<PlacesDataSource> { PlacesRepository(get()) }
             single { PlacesRepository(get()) }
         }
 

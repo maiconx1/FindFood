@@ -6,6 +6,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.maicondcastro.findfood.BaseTest
 import com.maicondcastro.findfood.database.PlaceDao
+import com.maicondcastro.findfood.utils.extensions.asDomainModel
+import com.maicondcastro.findfood.getOrAwaitValue
 import com.maicondcastro.findfood.network.PlacesRemoteDataSource
 import com.maicondcastro.findfood.network.repository.PlaceTestHelper.PLACE_DTO_SAVED
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -104,5 +106,16 @@ class PlacesRemoteRepositoryTest : BaseTest {
             assertThat(place?.saved, `is`(true))
             assertThat(place?.name, not(savedPlace.name))
         }
+    }
+
+    @Test
+    fun places_updatesLiveData() {
+        placeDao.insertAll(PLACE_DTO_SAVED)
+
+        val liveData = repository.places
+
+        val value = liveData.getOrAwaitValue()
+
+        assertThat(value, `is`(listOf(PLACE_DTO_SAVED.asDomainModel())))
     }
 }

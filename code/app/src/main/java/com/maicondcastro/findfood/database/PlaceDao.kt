@@ -13,7 +13,10 @@ interface PlaceDao {
     @Update
     fun update(vararg place: PlaceDto)
 
-    @Query("DELETE FROM place where not saved")
+    @Query("SELECT * FROM place WHERE placeId == :placeId")
+    fun getPlaceById(placeId: String): PlaceDto?
+
+    @Query("DELETE FROM place WHERE NOT saved")
     fun deleteNotSaved()
 
     @Query("SELECT * FROM place")
@@ -22,9 +25,9 @@ interface PlaceDao {
     @Query("SELECT * FROM place")
     fun getPlaces(): List<PlaceDto>
 
-    @Query("SELECT * FROM place where saved")
+    @Query("SELECT * FROM place WHERE saved")
     fun getSavedPlacesLiveData(): LiveData<List<PlaceDto>>
 
-    @Query("SELECT * FROM place where saved")
+    @Query("SELECT * FROM place WHERE saved")
     fun getSavedPlaces(): List<PlaceDto>
 }

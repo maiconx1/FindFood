@@ -1,4 +1,4 @@
-package com.maicondcastro.findfood
+package com.maicondcastro.findfood.utils
 
 class Constants {
     companion object {

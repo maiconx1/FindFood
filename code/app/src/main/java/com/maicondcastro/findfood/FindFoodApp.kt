@@ -2,7 +2,7 @@ package com.maicondcastro.findfood
 
 import android.app.Application
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.maicondcastro.findfood.Constants.Companion.BASE_URL
+import com.maicondcastro.findfood.utils.Constants.Companion.BASE_URL
 import com.maicondcastro.findfood.domain.repository.PlacesRepository
 import com.maicondcastro.findfood.network.PlacesApiService
 import com.maicondcastro.findfood.network.PlacesHttpClient

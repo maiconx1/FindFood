@@ -1,4 +1,4 @@
-package com.maicondcastro.findfood.extensions
+package com.maicondcastro.findfood.utils.extensions
 
 import org.json.JSONObject
 import java.lang.Exception

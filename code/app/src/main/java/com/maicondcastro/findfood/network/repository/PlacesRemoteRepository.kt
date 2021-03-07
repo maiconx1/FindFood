@@ -6,8 +6,8 @@ import com.maicondcastro.findfood.database.PlaceDao
 import com.maicondcastro.findfood.database.dto.PlaceDto
 import com.maicondcastro.findfood.network.PlacesRemoteDataSource
 import com.maicondcastro.findfood.domain.models.Place
-import com.maicondcastro.findfood.extensions.asDatabase
-import com.maicondcastro.findfood.extensions.asDomain
+import com.maicondcastro.findfood.utils.extensions.asDatabase
+import com.maicondcastro.findfood.utils.extensions.asDomain
 import com.maicondcastro.findfood.network.PlacesApiService
 import com.maicondcastro.findfood.network.parsePlacesJsonResult
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +19,7 @@ class PlacesRemoteRepository(
     private val networkPlaces: PlacesApiService
 ) : PlacesRemoteDataSource {
 
-    val places: LiveData<List<Place>> = Transformations.map(placeDao.getPlacesLiveData()) {
+    override val places: LiveData<List<Place>> = Transformations.map(placeDao.getPlacesLiveData()) {
         it.asDomain()
     }
 

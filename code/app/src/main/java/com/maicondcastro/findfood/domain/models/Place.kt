@@ -1,7 +1,7 @@
 package com.maicondcastro.findfood.domain.models
 
 import android.os.Parcelable
-import com.maicondcastro.findfood.Constants
+import com.maicondcastro.findfood.utils.Constants
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

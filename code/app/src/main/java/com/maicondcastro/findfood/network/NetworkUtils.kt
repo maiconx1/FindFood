@@ -1,6 +1,6 @@
 package com.maicondcastro.findfood.network
 
-import com.maicondcastro.findfood.extensions.*
+import com.maicondcastro.findfood.utils.extensions.*
 import com.maicondcastro.findfood.domain.models.Place
 import org.json.JSONObject
 
