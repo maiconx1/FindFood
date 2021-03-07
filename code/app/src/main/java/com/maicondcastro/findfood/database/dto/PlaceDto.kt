@@ -4,9 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "place")
-class PlaceDto constructor(
+data class PlaceDto constructor(
     @PrimaryKey
-    val placeId: String?,
+    val placeId: String,
     val name: String?,
     val rating: Double?,
     val userRatingTotal: Int?,

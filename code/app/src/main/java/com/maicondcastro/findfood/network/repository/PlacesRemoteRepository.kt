@@ -3,6 +3,7 @@ package com.maicondcastro.findfood.network.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.maicondcastro.findfood.database.PlaceDao
+import com.maicondcastro.findfood.database.dto.PlaceDto
 import com.maicondcastro.findfood.network.PlacesRemoteDataSource
 import com.maicondcastro.findfood.domain.models.Place
 import com.maicondcastro.findfood.extensions.asDatabase
@@ -29,19 +30,19 @@ class PlacesRemoteRepository(
         types: String,
         name: String
     ): List<Place> {
+        var jsonPlaces: List<PlaceDto>
         withContext(Dispatchers.IO) {
             val places = networkPlaces.getPlacesAsync(location, radius).await()
 
             placeDao.deleteNotSaved()
-            val jsonPlaces = parsePlacesJsonResult(JSONObject(places)).asDatabase()
+            jsonPlaces = parsePlacesJsonResult(JSONObject(places)).asDatabase()
             val databasePlaces = placeDao.getPlaces()
             databasePlaces.forEach { place ->
-                if (databasePlaces.firstOrNull { p -> p.placeId == place.placeId } != null) {
-                    place.saved = true
-                }
+                jsonPlaces.firstOrNull { p -> p.placeId == place.placeId }?.saved = place.saved
             }
             placeDao.insertAll(*jsonPlaces.toTypedArray())
+
         }
-        return listOf()
+        return jsonPlaces.asDomain()
     }
 }

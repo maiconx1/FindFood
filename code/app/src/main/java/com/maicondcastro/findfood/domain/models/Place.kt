@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Place(
-    val placeId: String?,
+    val placeId: String,
     val name: String?,
     val rating: Double?,
     val userRatingTotal: Int?,

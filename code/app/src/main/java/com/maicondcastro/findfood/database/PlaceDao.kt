@@ -21,4 +21,10 @@ interface PlaceDao {
 
     @Query("SELECT * FROM place")
     fun getPlaces(): List<PlaceDto>
+
+    @Query("SELECT * FROM place where saved")
+    fun getSavedPlacesLiveData(): LiveData<List<PlaceDto>>
+
+    @Query("SELECT * FROM place where saved")
+    fun getSavedPlaces(): List<PlaceDto>
 }

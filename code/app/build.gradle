@@ -40,6 +40,17 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/AL2.0'
+    }
 }
 
 dependencies {
@@ -68,6 +79,8 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
     implementation "com.squareup.retrofit2:converter-scalars:$version_retrofit"
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
+    testImplementation("com.squareup.okhttp3:mockwebserver:$version_retrofit")
+
 
     // Moshi
     implementation "com.squareup.moshi:moshi:$version_moshi"
@@ -93,6 +106,31 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$version_koin"
     androidTestImplementation("org.koin:koin-test:$version_koin") { exclude group: 'org.mockito' }
     testImplementation("org.koin:koin-test:$version_koin") { exclude group: 'org.mockito' }
+
+    // AndroidX Test - JVM testing
+    testImplementation "androidx.test:core-ktx:$version_androidx_test"
+    testImplementation "androidx.test.ext:junit-ktx:$version_androidx_test_ext"
+    testImplementation "androidx.test:rules:$version_androidx_test_rules"
+
+    // AndroidX Test - Instrumented testing
+    androidTestImplementation "androidx.test:core-ktx:$version_androidx_test"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$version_androidx_test_ext"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_kotlin_coroutines"
+    androidTestImplementation "androidx.test:rules:$version_androidx_test_rules"
+    androidTestImplementation "androidx.room:room-testing:$version_room"
+    androidTestImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+    androidTestImplementation "org.robolectric:annotations:$robolectricVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$espressoVersion"
+    androidTestImplementation "junit:junit:$junitVersion"
+    debugImplementation "androidx.fragment:fragment-testing:$fragmentVersion"
+    implementation "androidx.test:core:$version_androidx_test"
+    implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
+    androidTestImplementation "org.mockito:mockito-core:$mockitoVersion"
+    androidTestImplementation('org.koin:koin-test:2.2.2') { exclude group: 'org.mockito' }
+    testImplementation('org.koin:koin-test:2.2.2') { exclude group: 'org.mockito' }
 
     testImplementation 'org.json:json:20180813'
 
