@@ -52,24 +52,28 @@ class PlacesRepositoryTest : BaseTest {
     }
 
     @Test
-    fun savedPlaces_updatesLiveDataWhenExists() {
-        dao.insertAll(PLACE_DTO_SAVED)
+    fun getSavedPlaces_success() {
+        runBlocking {
+            dao.insertAll(PLACE_DTO_SAVED)
 
-        val liveData = repository.savedPlaces
+            val liveData = repository.getSavedPlaces()
 
-        val value = liveData.getOrAwaitValue()
+            val value = liveData.getOrAwaitValue()
 
-        assertThat(value, `is`(listOf(PLACE_DTO_SAVED).asDomain()))
+            assertThat(value, `is`(listOf(PLACE_DTO_SAVED).asDomain()))
+        }
     }
 
     @Test
-    fun savedPlaces_doesntUpdateLiveDataWhenNotExists() {
-        dao.insertAll(PLACE_DTO)
+    fun getSavedPlaces_failed() {
+        runBlocking {
+            dao.insertAll(PLACE_DTO)
 
-        val liveData = repository.savedPlaces
+            val liveData = repository.getSavedPlaces()
 
-        val value = liveData.getOrAwaitValue()
+            val value = liveData.getOrAwaitValue()
 
-        assertThat(value.isEmpty(), `is`(true))
+            assertThat(value.isEmpty(), `is`(true))
+        }
     }
 }

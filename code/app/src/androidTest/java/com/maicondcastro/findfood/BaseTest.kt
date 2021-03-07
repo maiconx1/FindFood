@@ -10,10 +10,12 @@ import com.maicondcastro.findfood.network.PlacesApiService
 import com.maicondcastro.findfood.network.PlacesHttpClient
 import com.maicondcastro.findfood.network.PlacesRemoteDataSource
 import com.maicondcastro.findfood.network.repository.PlacesRemoteRepository
+import com.maicondcastro.findfood.savedplaces.SavedPlacesViewModel
 import com.maicondcastro.findfood.utils.Constants
 import org.junit.After
 import org.junit.Before
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
@@ -30,6 +32,24 @@ interface BaseTest : KoinTest {
     @Before
     fun init() {
         stopKoin()
+        val mainModule = module {
+            viewModel {
+                SavedPlacesViewModel(
+                    get(),
+                    get() as PlacesDataSource
+                )
+            }
+
+            single {
+                Room.inMemoryDatabaseBuilder(
+                    androidContext(),
+                    PlaceDatabase::class.java
+                ).build().placeDao }
+
+            single<PlacesDataSource> { PlacesRepository(get()) }
+            single { PlacesRepository(get()) }
+        }
+
         val networkModule = module {
             single {
                 PlacesHttpClient.getClient()
@@ -43,7 +63,7 @@ interface BaseTest : KoinTest {
                 MoshiConverterFactory.create()
             }
 
-            single< CallAdapter.Factory> {
+            single<CallAdapter.Factory> {
                 CoroutineCallAdapterFactory()
             }
 
@@ -59,20 +79,12 @@ interface BaseTest : KoinTest {
 
             single { get<Retrofit>().create(PlacesApiService::class.java) }
 
-            single {
-                Room.inMemoryDatabaseBuilder(
-                    androidContext(),
-                    PlaceDatabase::class.java
-                ).build().placeDao }
-
             single<PlacesRemoteDataSource> { PlacesRemoteRepository(get(), get()) }
-            single<PlacesDataSource> { PlacesRepository(get()) }
-            single { PlacesRepository(get()) }
         }
 
         startKoin {
             androidContext(ApplicationProvider.getApplicationContext())
-            modules(listOf(networkModule))
+            modules(listOf(mainModule, networkModule))
         }
     }
 

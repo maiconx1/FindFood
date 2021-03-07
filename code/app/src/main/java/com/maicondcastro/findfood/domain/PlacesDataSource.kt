@@ -5,7 +5,7 @@ import com.maicondcastro.findfood.domain.models.Place
 
 interface PlacesDataSource {
 
-    val savedPlaces: LiveData<List<Place>>
+    suspend fun getSavedPlaces() : LiveData<List<Place>>
 
     suspend fun savePlace(placeId: String, saved: Boolean)
 }

@@ -12,11 +12,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
-class PlacesRepository(private val placeDao: PlaceDao): PlacesDataSource {
+class PlacesRepository(private val placeDao: PlaceDao) : PlacesDataSource {
 
-    override val savedPlaces: LiveData<List<Place>> = Transformations.map(placeDao.getSavedPlacesLiveData()) {
-        it.asDomain()
-    }
+
+    override suspend fun getSavedPlaces(): LiveData<List<Place>> =
+        Transformations.map(placeDao.getSavedPlacesLiveData()) {
+            it.asDomain()
+        }
 
     override suspend fun savePlace(placeId: String, saved: Boolean) {
         withContext(Dispatchers.IO) {

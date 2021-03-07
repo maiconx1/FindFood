@@ -1,8 +1,8 @@
 package com.maicondcastro.findfood.network
 
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
 import org.json.JSONObject
-import org.junit.Assert.*
 import org.junit.Test
 
 class NetworkUtilsTest {
