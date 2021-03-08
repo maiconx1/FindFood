@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/savedPlacesFragment">
+
+    <fragment
+        android:id="@+id/savedPlacesFragment"
+        android:name="com.maicondcastro.findfood.places.savedplaces.SavedPlacesFragment"
+        android:label="SavedPlacesFragment"
+        tools:layout="@layout/fragment_saved_places">
+        <action
+            android:id="@+id/action_savedPlacesFragment_to_placeListFragment"
+            app:destination="@id/placeListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/placeListFragment"
+        android:name="com.maicondcastro.findfood.places.placelist.PlaceListFragment"
+        android:label="PlaceListFragment"
+        tools:layout="@layout/fragment_place_list"/>
+</navigation>

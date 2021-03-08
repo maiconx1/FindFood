@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Find Food</string>
+    <string name="find_nearby_food">Find nearby food!</string>
+    <string name="no_data">No data</string>
+    <string name="saved_places">Saved places</string>
+    <string name="nearby_food">Nearby food</string>
+
 </resources>

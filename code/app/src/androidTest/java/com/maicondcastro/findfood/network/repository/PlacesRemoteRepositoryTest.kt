@@ -6,10 +6,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.maicondcastro.findfood.BaseTest
 import com.maicondcastro.findfood.database.PlaceDao
-import com.maicondcastro.findfood.utils.extensions.asDomainModel
 import com.maicondcastro.findfood.getOrAwaitValue
 import com.maicondcastro.findfood.network.PlacesRemoteDataSource
 import com.maicondcastro.findfood.network.repository.PlaceTestHelper.PLACE_DTO_SAVED
+import com.maicondcastro.findfood.utils.asDomainModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.not

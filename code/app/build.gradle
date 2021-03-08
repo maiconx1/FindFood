@@ -23,8 +23,17 @@ android {
         multiDexEnabled true
     }
 
+    testOptions.unitTests {
+        includeAndroidResources = true
+        returnDefaultValues = true
+    }
+
     testOptions {
         unitTests.returnDefaultValues = true
+    }
+
+    buildFeatures {
+        dataBinding true
     }
 
     buildTypes {
@@ -88,6 +97,7 @@ dependencies {
 
     // Glide
     implementation "com.github.bumptech.glide:glide:$version_glide"
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     annotationProcessor "com.github.bumptech.glide:compiler:$version_glide"
 
     //Room
@@ -139,6 +149,7 @@ dependencies {
     implementation "androidx.test:core:$version_androidx_test"
     implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
     androidTestImplementation "org.mockito:mockito-core:$mockitoVersion"
+    androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
     androidTestImplementation('org.koin:koin-test:2.2.2') { exclude group: 'org.mockito' }
     testImplementation('org.koin:koin-test:2.2.2') { exclude group: 'org.mockito' }
 

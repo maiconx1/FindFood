@@ -1,7 +1,11 @@
 package com.maicondcastro.findfood.network
 
-import com.maicondcastro.findfood.utils.extensions.*
 import com.maicondcastro.findfood.domain.models.Place
+import com.maicondcastro.findfood.utils.getDoubleOrNull
+import com.maicondcastro.findfood.utils.getIntOrNull
+import com.maicondcastro.findfood.utils.getJSONObjectOrNull
+import com.maicondcastro.findfood.utils.getStringOrNull
+import com.maicondcastro.findfood.utils.getBooleanOrNull
 import org.json.JSONObject
 
 fun parsePlacesJsonResult(jsonResult: JSONObject): ArrayList<Place> {

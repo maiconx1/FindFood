@@ -5,10 +5,10 @@ import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import com.maicondcastro.findfood.BaseTest
 import com.maicondcastro.findfood.database.PlaceDao
 import com.maicondcastro.findfood.domain.PlacesDataSource
-import com.maicondcastro.findfood.utils.extensions.asDomain
 import com.maicondcastro.findfood.getOrAwaitValue
 import com.maicondcastro.findfood.network.repository.PlaceTestHelper.PLACE_DTO
 import com.maicondcastro.findfood.network.repository.PlaceTestHelper.PLACE_DTO_SAVED
+import com.maicondcastro.findfood.utils.asDomain
 import com.maicondcastro.findfood.utils.exceptions.PlaceNotFoundException
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.not
@@ -56,9 +56,7 @@ class PlacesRepositoryTest : BaseTest {
         runBlocking {
             dao.insertAll(PLACE_DTO_SAVED)
 
-            val liveData = repository.getSavedPlaces()
-
-            val value = liveData.getOrAwaitValue()
+            val value = repository.getSavedPlaces()
 
             assertThat(value, `is`(listOf(PLACE_DTO_SAVED).asDomain()))
         }
@@ -69,9 +67,7 @@ class PlacesRepositoryTest : BaseTest {
         runBlocking {
             dao.insertAll(PLACE_DTO)
 
-            val liveData = repository.getSavedPlaces()
-
-            val value = liveData.getOrAwaitValue()
+            val value = repository.getSavedPlaces()
 
             assertThat(value.isEmpty(), `is`(true))
         }

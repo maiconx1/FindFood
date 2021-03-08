@@ -3,6 +3,8 @@ package com.maicondcastro.findfood
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.maicondcastro.findfood.database.FakeDao
+import com.maicondcastro.findfood.database.PlaceDao
 import com.maicondcastro.findfood.database.PlaceDatabase
 import com.maicondcastro.findfood.domain.PlacesDataSource
 import com.maicondcastro.findfood.domain.repository.PlacesRepository
@@ -10,7 +12,7 @@ import com.maicondcastro.findfood.network.PlacesApiService
 import com.maicondcastro.findfood.network.PlacesHttpClient
 import com.maicondcastro.findfood.network.PlacesRemoteDataSource
 import com.maicondcastro.findfood.network.repository.PlacesRemoteRepository
-import com.maicondcastro.findfood.savedplaces.SavedPlacesViewModel
+import com.maicondcastro.findfood.places.savedplaces.SavedPlacesViewModel
 import com.maicondcastro.findfood.utils.Constants
 import org.junit.After
 import org.junit.Before
@@ -40,13 +42,14 @@ interface BaseTest : KoinTest {
                 )
             }
 
-            single {
+            single(named("RealDao")) {
                 Room.inMemoryDatabaseBuilder(
                     androidContext(),
                     PlaceDatabase::class.java
                 ).build().placeDao }
 
-            single<PlacesDataSource> { PlacesRepository(get()) }
+            single<PlaceDao>(named("FakeDao")) { FakeDao() }
+            single<PlacesDataSource> { PlacesRepository(get(named("FakeDao"))) }
             single { PlacesRepository(get()) }
         }
 

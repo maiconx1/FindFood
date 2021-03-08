@@ -1,4 +1,4 @@
-package com.maicondcastro.findfood.savedplaces
+package com.maicondcastro.findfood.places.savedplaces
 
 import com.maicondcastro.findfood.database.dto.PlaceDto
 

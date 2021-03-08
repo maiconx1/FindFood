@@ -4,7 +4,7 @@ import androidx.test.core.app.ApplicationProvider
 import com.maicondcastro.findfood.database.PlaceDao
 import com.maicondcastro.findfood.domain.PlacesDataSource
 import com.maicondcastro.findfood.domain.repository.PlacesRepository
-import com.maicondcastro.findfood.savedplaces.SavedPlacesViewModel
+import com.maicondcastro.findfood.places.savedplaces.SavedPlacesViewModel
 import org.junit.After
 import org.junit.Before
 import org.koin.android.ext.koin.androidContext

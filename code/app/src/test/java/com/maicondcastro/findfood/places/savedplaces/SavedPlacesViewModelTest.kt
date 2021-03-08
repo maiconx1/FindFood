@@ -1,16 +1,14 @@
-package com.maicondcastro.findfood.savedplaces
+package com.maicondcastro.findfood.places.savedplaces
 
 import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.maicondcastro.findfood.common.BaseUnitTest
-import com.maicondcastro.findfood.common.FakeDao
-import com.maicondcastro.findfood.common.MainCoroutineRule
-import com.maicondcastro.findfood.common.getOrAwaitValue
+import com.maicondcastro.findfood.common.*
 import com.maicondcastro.findfood.database.PlaceDao
-import com.maicondcastro.findfood.domain.models.Place
-import com.maicondcastro.findfood.savedplaces.PlaceTestHelper.PLACE_DTO_SAVED
-import com.maicondcastro.findfood.utils.extensions.asDomainModel
+import com.maicondcastro.findfood.places.PlaceItem
+import com.maicondcastro.findfood.places.savedplaces.PlaceTestHelper.PLACE_DTO_SAVED
+import com.maicondcastro.findfood.utils.asDomainModel
+import com.maicondcastro.findfood.utils.asItemModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.MatcherAssert.assertThat
@@ -53,7 +51,7 @@ class SavedPlacesViewModelTest : BaseUnitTest {
 
     @Test
     fun loadSavedPlaces_successList() {
-        assertThat(viewModel.savedPlaces.value?.isEmpty(), `is`(true))
+        assertThat(viewModel.savedPlaces.value, `is`(nullValue()))
         viewModel.loadSavedPlaces()
         assertThat(
             viewModel.savedPlaces.getOrAwaitValue(),
@@ -66,12 +64,12 @@ class SavedPlacesViewModelTest : BaseUnitTest {
     fun loadSavedPlaces_successValues() {
         fakeDao.insertAll(PLACE_DTO_SAVED)
 
-        assertThat(viewModel.savedPlaces.value?.isEmpty(), `is`(true))
+        assertThat(viewModel.savedPlaces.value, `is`(nullValue()))
         viewModel.loadSavedPlaces()
         val places = listOf(PLACE_DTO_SAVED)
-        val dataList = ArrayList<Place>()
+        val dataList = ArrayList<PlaceItem>()
         dataList.addAll(places.map { place ->
-            place.asDomainModel()
+            place.asDomainModel().asItemModel()
         })
         assertEquals(viewModel.savedPlaces.getOrAwaitValue(), dataList)
     }

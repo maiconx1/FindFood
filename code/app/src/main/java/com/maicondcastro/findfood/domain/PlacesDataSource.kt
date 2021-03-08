@@ -5,7 +5,7 @@ import com.maicondcastro.findfood.domain.models.Place
 
 interface PlacesDataSource {
 
-    suspend fun getSavedPlaces() : LiveData<List<Place>>
+    suspend fun getSavedPlaces() : List<Place>
 
     suspend fun savePlace(placeId: String, saved: Boolean)
 }
