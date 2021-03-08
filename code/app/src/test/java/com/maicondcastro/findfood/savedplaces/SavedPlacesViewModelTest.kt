@@ -13,10 +13,9 @@ import com.maicondcastro.findfood.savedplaces.PlaceTestHelper.PLACE_DTO_SAVED
 import com.maicondcastro.findfood.utils.extensions.asDomainModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
 import org.hamcrest.Matchers.notNullValue
+import org.hamcrest.Matchers.nullValue
 import org.hamcrest.core.Is.`is`
 import org.hamcrest.core.IsNot
 import org.junit.Assert.assertEquals
@@ -54,11 +53,11 @@ class SavedPlacesViewModelTest : BaseUnitTest {
 
     @Test
     fun loadSavedPlaces_successList() {
-        assertThat(viewModel.savedPlaces.value, `is`(Matchers.nullValue()))
+        assertThat(viewModel.savedPlaces.value?.isEmpty(), `is`(true))
         viewModel.loadSavedPlaces()
         assertThat(
             viewModel.savedPlaces.getOrAwaitValue(),
-            `is`(Matchers.notNullValue())
+            `is`(notNullValue())
         )
     }
 
@@ -67,7 +66,7 @@ class SavedPlacesViewModelTest : BaseUnitTest {
     fun loadSavedPlaces_successValues() {
         fakeDao.insertAll(PLACE_DTO_SAVED)
 
-        assertThat(viewModel.savedPlaces.value, `is`(Matchers.nullValue()))
+        assertThat(viewModel.savedPlaces.value?.isEmpty(), `is`(true))
         viewModel.loadSavedPlaces()
         val places = listOf(PLACE_DTO_SAVED)
         val dataList = ArrayList<Place>()
@@ -83,11 +82,11 @@ class SavedPlacesViewModelTest : BaseUnitTest {
     fun loadSavedPlaces_error() {
         (fakeDao as FakeDao).shouldReturnError = true
 
-        assertThat(viewModel.showSnackBar.value, `is`(Matchers.nullValue()))
+        assertThat(viewModel.showSnackBar.value, `is`(nullValue()))
         viewModel.loadSavedPlaces()
         assertThat(
             viewModel.showSnackBar.getOrAwaitValue(),
-            IsNot.not(`is`(Matchers.nullValue()))
+            IsNot.not(`is`(nullValue()))
         )
     }
 

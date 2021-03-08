@@ -15,7 +15,7 @@ class SavedPlacesViewModel(
     private val dataSource: PlacesDataSource
 ) : BaseViewModel(app) {
 
-    var savedPlaces: LiveData<List<Place>> = MutableLiveData()
+    var savedPlaces: LiveData<List<Place>> = MutableLiveData(listOf())
 
     fun loadSavedPlaces() {
         showLoading.value = true
@@ -30,11 +30,13 @@ class SavedPlacesViewModel(
                 showSnackBar.value = ex.message
             }
         }
-
         invalidateShowNoData()
     }
 
     private fun invalidateShowNoData() {
-        showNoData.value = savedPlaces.value == null || savedPlaces.value!!.isEmpty()
+        showNoData = Transformations.map(savedPlaces) {
+            it.isEmpty()
+        }
+        //showNoData.value = savedPlaces.value == null || savedPlaces.value!!.isEmpty()
     }
 }
