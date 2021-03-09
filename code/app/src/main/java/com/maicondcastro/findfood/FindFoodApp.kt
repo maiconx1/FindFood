@@ -11,6 +11,7 @@ import com.maicondcastro.findfood.network.PlacesApiService
 import com.maicondcastro.findfood.network.PlacesHttpClient
 import com.maicondcastro.findfood.network.PlacesRemoteDataSource
 import com.maicondcastro.findfood.network.repository.PlacesRemoteRepository
+import com.maicondcastro.findfood.places.placedetails.PlaceDetailsViewModel
 import com.maicondcastro.findfood.places.placelist.PlaceListViewModel
 import com.maicondcastro.findfood.places.savedplaces.SavedPlacesViewModel
 import org.koin.android.ext.koin.androidContext
@@ -41,6 +42,14 @@ class FindFoodApp : Application() {
                 PlaceListViewModel(
                     get(),
                     get() as PlacesRemoteDataSource
+                )
+            }
+
+            viewModel {
+                PlaceDetailsViewModel(
+                    get(),
+                    get() as PlacesRemoteDataSource,
+                    get() as PlacesDataSource
                 )
             }
 

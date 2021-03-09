@@ -1,7 +1,8 @@
 package com.maicondcastro.findfood.base
 
+import android.content.Intent
+import android.net.Uri
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 
@@ -33,6 +34,10 @@ abstract class BaseFragment : Fragment() {
                     false
                 )
             }
+        })
+        viewModel.openUrl.observe(this, { url ->
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
         })
     }
 }

@@ -14,10 +14,13 @@ class PlacesRepository(private val placeDao: PlaceDao) : PlacesDataSource {
     override suspend fun getSavedPlaces(): List<Place> =
         placeDao.getSavedPlaces().map { it.asDomainModel() }
 
+    override suspend fun getPlaceById(placeId: String): Place? =
+        placeDao.getPlaceById(placeId)?.asDomainModel()
+
     override suspend fun savePlace(placeId: String, saved: Boolean) {
         withContext(Dispatchers.IO) {
             placeDao.getPlaceById(placeId)?.let {
-                it.saved = true
+                it.saved = saved
                 placeDao.update(it)
             } ?: throw PlaceNotFoundException()
         }

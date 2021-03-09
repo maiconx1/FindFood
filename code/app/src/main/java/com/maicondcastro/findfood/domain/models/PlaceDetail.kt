@@ -1,11 +1,10 @@
 package com.maicondcastro.findfood.domain.models
 
 import android.os.Parcelable
-import com.maicondcastro.findfood.utils.Constants
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Place(
+data class PlaceDetail (
     val placeId: String,
     val name: String?,
     val rating: Double?,
@@ -15,8 +14,8 @@ data class Place(
     val lat: Double?,
     val lng: Double?,
     val businessStatus: String?,
-    val saved: Boolean = false
-) : Parcelable {
-    val shouldList: Boolean
-        get() = businessStatus == Constants.PLACE_BUSINESS_OPERATIONAL
-}
+    val icon: String?,
+    val weekdayText: List<String>?,
+    val url: String?,
+    val webSite: String?
+) : Parcelable

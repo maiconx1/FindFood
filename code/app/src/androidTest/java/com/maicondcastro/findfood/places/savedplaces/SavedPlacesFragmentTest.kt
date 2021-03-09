@@ -14,6 +14,8 @@ import com.maicondcastro.findfood.BaseTest
 import com.maicondcastro.findfood.R
 import com.maicondcastro.findfood.database.PlaceDao
 import com.maicondcastro.findfood.network.repository.PlaceTestHelper.PLACE_DTO_SAVED
+import com.maicondcastro.findfood.utils.asDomainModel
+import com.maicondcastro.findfood.utils.asItemModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.Matchers.not
@@ -50,9 +52,28 @@ class SavedPlacesFragmentTest : BaseTest {
 
             onView(withId(R.id.noDataTextView)).check(matches(not(isDisplayed())))
 
-            onView(withId(R.id.saved_list)).check(matches(hasDescendant(withText(place.name))))
-            onView(withId(R.id.saved_list)).check(matches(hasDescendant(withText(place.vicinity))))
-            onView(withId(R.id.saved_list)).check(matches(hasDescendant(withText(place.rating.toString()))))
+            val placeItem = place.asDomainModel().asItemModel()
+            onView(withId(R.id.saved_list)).check(matches(hasDescendant(withText(placeItem.name))))
+            onView(withId(R.id.saved_list)).check(matches(hasDescendant(withText(placeItem.vicinity))))
+            onView(withId(R.id.saved_list)).check(matches(hasDescendant(withText(placeItem.ratingString))))
+        }
+    }
+
+    @Test
+    fun savedList_DisplayedClosedInUi() {
+        runBlocking {
+            val place = PLACE_DTO_SAVED.copy(openNow = false)
+            dao.insertAll(place)
+
+            launchFragmentInContainer<SavedPlacesFragment>(bundleOf(), R.style.Theme_FindFood)
+
+            onView(withId(R.id.noDataTextView)).check(matches(not(isDisplayed())))
+
+            val placeItem = place.asDomainModel().asItemModel()
+            onView(withId(R.id.saved_list)).check(matches(hasDescendant(withText(placeItem.name))))
+            onView(withId(R.id.saved_list)).check(matches(hasDescendant(withText(placeItem.vicinity))))
+            onView(withId(R.id.saved_list)).check(matches(hasDescendant(withText(placeItem.ratingString))))
+            onView(withId(R.id.saved_list)).check(matches(hasDescendant(withText("Closed"))))
         }
     }
 

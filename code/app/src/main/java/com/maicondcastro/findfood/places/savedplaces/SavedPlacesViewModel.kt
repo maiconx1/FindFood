@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.maicondcastro.findfood.base.BaseViewModel
-import com.maicondcastro.findfood.places.PlaceItem
+import com.maicondcastro.findfood.places.models.PlaceItem
 import com.maicondcastro.findfood.domain.PlacesDataSource
 import com.maicondcastro.findfood.utils.asItemModel
 import kotlinx.coroutines.launch

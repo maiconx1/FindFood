@@ -9,4 +9,5 @@
     <color name="black_CCCCCC">#FFCCCCCC</color>
     <color name="white">#FFFFFFFF</color>
     <color name="fade_background">#33CCCCCC</color>
+    <color name="link">#2889FF</color>
 </resources>

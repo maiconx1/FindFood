@@ -7,7 +7,9 @@ import com.maicondcastro.findfood.domain.models.Place
 import com.maicondcastro.findfood.utils.asDatabase
 import com.maicondcastro.findfood.utils.asDomain
 import com.maicondcastro.findfood.network.PlacesApiService
+import com.maicondcastro.findfood.network.parsePlaceDetailsJsonResult
 import com.maicondcastro.findfood.network.parsePlacesJsonResult
+import com.maicondcastro.findfood.domain.models.PlaceDetail
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -24,7 +26,7 @@ class PlacesRemoteRepository(
     ): List<Place> {
         var jsonPlaces: List<PlaceDto>
         withContext(Dispatchers.IO) {
-            val places = networkPlaces.getPlacesAsync(location, radius).await()
+            val places = networkPlaces.getNearbyPlacesAsync(location, radius).await()
 
             placeDao.deleteNotSaved()
             jsonPlaces = parsePlacesJsonResult(JSONObject(places)).asDatabase()
@@ -36,5 +38,17 @@ class PlacesRemoteRepository(
 
         }
         return jsonPlaces.asDomain()
+    }
+
+    override suspend fun getPlaceDetails(
+        placeId: String,
+        language: String
+    ): PlaceDetail? {
+        var json: PlaceDetail?
+        withContext(Dispatchers.IO) {
+            val places = networkPlaces.getPlaceDetailAsync(placeId).await()
+            json = parsePlaceDetailsJsonResult(JSONObject(places))
+        }
+        return json
     }
 }

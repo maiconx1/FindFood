@@ -73,7 +73,13 @@ class SavedPlacesFragment : BaseFragment() {
 
     private fun setupRecyclerView() {
         val adapter = PlaceListAdapter {
-            //viewModel.navigationCommand.postValue(NavigationCommand.To())
+            viewModel.navigationCommand.postValue(
+                NavigationCommand.To(
+                    SavedPlacesFragmentDirections.actionSavedPlacesFragmentToPlaceDetailFragment(
+                        it.placeId
+                    )
+                )
+            )
         }
 
         binding.savedList.setup(adapter)

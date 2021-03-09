@@ -5,7 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.maicondcastro.findfood.common.*
 import com.maicondcastro.findfood.database.PlaceDao
-import com.maicondcastro.findfood.places.PlaceItem
+import com.maicondcastro.findfood.places.models.PlaceItem
 import com.maicondcastro.findfood.places.PlaceTestHelper.PLACE_DTO_SAVED
 import com.maicondcastro.findfood.utils.asDomainModel
 import com.maicondcastro.findfood.utils.asItemModel

@@ -9,5 +9,11 @@
     <string name="necessary_location_permission">Location permission is necessary for finding places</string>
     <string name="settings">Settings</string>
     <string name="closed">Closed</string>
+    <string name="follow_place">Follow place</string>
+    <string name="unfollow_place">Unfollow place</string>
+    <string name="open_now">Open now</string>
+    <string name="check_on_maps">Check on Google Maps</string>
+    <string name="check_website">Check website</string>
+    <string name="description_icon">Place\'s icon</string>
 
 </resources>

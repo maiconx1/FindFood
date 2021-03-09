@@ -13,10 +13,26 @@
         <action
             android:id="@+id/action_savedPlacesFragment_to_placeListFragment"
             app:destination="@id/placeListFragment" />
+        <action
+            android:id="@+id/action_savedPlacesFragment_to_placeDetailFragment"
+            app:destination="@id/placeDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/placeListFragment"
         android:name="com.maicondcastro.findfood.places.placelist.PlaceListFragment"
         android:label="PlaceListFragment"
-        tools:layout="@layout/fragment_place_list"/>
+        tools:layout="@layout/fragment_place_list">
+        <action
+            android:id="@+id/action_placeListFragment_to_placeDetailFragment"
+            app:destination="@id/placeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/placeDetailFragment"
+        android:name="com.maicondcastro.findfood.places.placedetails.PlaceDetailFragment"
+        android:label="PlaceDetailFragment"
+        tools:layout="@layout/fragment_place_detail" >
+        <argument
+            android:name="placeId"
+            app:argType="string" />
+    </fragment>
 </navigation>

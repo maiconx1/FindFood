@@ -50,10 +50,16 @@ class PlaceListFragment : BaseFragment() {
         setDisplayHomeAsUpEnabled(true)
         setTitle(getString(R.string.nearby_food))
 
+        viewModel.showLoading.value = false
+
         locationManager =
             requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        startLocationListener()
+        if (viewModel.places.value.isNullOrEmpty()) {
+            startLocationListener()
+        }
+
+        loadPlaces()
 
         return binding.root
     }
@@ -69,7 +75,6 @@ class PlaceListFragment : BaseFragment() {
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            viewModel.places.value = listOf()
             try {
                 locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER,
@@ -92,25 +97,30 @@ class PlaceListFragment : BaseFragment() {
         setupRecyclerView()
 
         binding.updateButton.setOnClickListener {
-            startLocationListener()
+            viewModel.places.value = listOf()
             if (binding.distanceEditText.text.isNullOrEmpty()) {
                 binding.distanceEditText.setText(Constants.DEFAULT_MAX_DISTANCE.toString())
             }
+            viewModel.showLoading.value = true
+            startLocationListener()
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        loadPlaces()
-    }
-
     private fun loadPlaces() {
-        viewModel.loadPlaces()
+        if (viewModel.places.value.isNullOrEmpty()) {
+            viewModel.loadPlaces()
+        }
     }
 
     private fun setupRecyclerView() {
         val adapter = PlaceListAdapter {
-            //viewModel.navigationCommand.postValue(NavigationCommand.To())
+            viewModel.navigationCommand.postValue(
+                NavigationCommand.To(
+                    PlaceListFragmentDirections.actionPlaceListFragmentToPlaceDetailFragment(
+                        it.placeId
+                    )
+                )
+            )
         }
 
         binding.savedList.setup(adapter)

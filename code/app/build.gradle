@@ -5,6 +5,9 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlinx-serialization'
 apply plugin: 'androidx.navigation.safeargs'
 
+def placesApiKey = System.getenv("PLACES_API_KEY")
+def googleMapApiKey = System.getenv("MAPS_API_KEY")
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -18,7 +21,9 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "PLACES_API_KEY", "\"${System.getenv('PLACES_API_KEY')}\"")
+        buildConfigField("String", "PLACES_API_KEY", "\"${placesApiKey}\"")
+
+        manifestPlaceholders = [googleMapApiKey: "${googleMapApiKey}"]
 
         multiDexEnabled true
     }
@@ -107,6 +112,7 @@ dependencies {
 
     // Location
     implementation "com.google.android.gms:play-services-location:$version_play_services_location"
+    implementation "com.google.android.gms:play-services-maps:$version_play_services_location"
 
     // Material
     implementation "com.google.android.material:material:$version_material"
@@ -132,7 +138,6 @@ dependencies {
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     testImplementation "com.google.truth:truth:$truthVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
-    testImplementation "com.squareup.okhttp3:mockwebserver:4.7.2"
 
     // AndroidX Test - Instrumented testing
     androidTestImplementation "androidx.test:core-ktx:$version_androidx_test"
@@ -154,6 +159,7 @@ dependencies {
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
     androidTestImplementation('org.koin:koin-test:2.2.2') { exclude group: 'org.mockito' }
     testImplementation('org.koin:koin-test:2.2.2') { exclude group: 'org.mockito' }
+
 
     testImplementation 'org.json:json:20180813'
 

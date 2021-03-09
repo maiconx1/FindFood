@@ -1,12 +1,11 @@
 package com.maicondcastro.findfood.places.placelist
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.maicondcastro.findfood.base.BaseViewModel
 import com.maicondcastro.findfood.network.PlacesRemoteDataSource
-import com.maicondcastro.findfood.places.PlaceItem
+import com.maicondcastro.findfood.places.models.PlaceItem
 import com.maicondcastro.findfood.utils.Constants.Companion.DEFAULT_MAX_DISTANCE
 import com.maicondcastro.findfood.utils.asItem
 import kotlinx.coroutines.launch
@@ -19,12 +18,12 @@ class PlaceListViewModel(
     var places = MutableLiveData<List<PlaceItem>>()
     val maxDistance = MutableLiveData(DEFAULT_MAX_DISTANCE.toString())
 
-    private val lat = MutableLiveData<Double>()
-    private val lng = MutableLiveData<Double>()
+    private var lat: Double? = null
+    private var lng: Double? = null
 
     fun loadPlaces() {
         try {
-            QueryItems(lat.value, lng.value, maxDistance.value?.toInt()).checkValid()?.let {
+            QueryItems(lat, lng, maxDistance.value?.toInt()).checkValid()?.let {
                 showLoading.value = true
                 viewModelScope.launch {
                     try {
@@ -42,6 +41,7 @@ class PlaceListViewModel(
                 }
             }
         } catch (ex: Exception) {
+            showLoading.value = false
             showSnackBar.value = ex.message
         }
     }
@@ -51,8 +51,8 @@ class PlaceListViewModel(
     }
 
     fun updateLatLng(lat: Double, lng: Double) {
-        this.lat.value = lat
-        this.lng.value = lng
+        this.lat = lat
+        this.lng = lng
     }
 
     data class QueryItems(

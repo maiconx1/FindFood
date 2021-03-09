@@ -7,5 +7,7 @@ interface PlacesDataSource {
 
     suspend fun getSavedPlaces() : List<Place>
 
+    suspend fun getPlaceById(placeId: String): Place?
+
     suspend fun savePlace(placeId: String, saved: Boolean)
 }

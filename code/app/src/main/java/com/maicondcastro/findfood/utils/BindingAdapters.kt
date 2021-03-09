@@ -1,10 +1,13 @@
 package com.maicondcastro.findfood.utils
 
 import android.view.View
+import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.maicondcastro.findfood.base.BaseRecyclerViewAdapter
+import java.lang.Exception
 
 object BindingAdapters {
     @Suppress("UNCHECKED_CAST")
@@ -13,8 +16,6 @@ object BindingAdapters {
     fun <T> setRecyclerViewData(recyclerView: RecyclerView, items: LiveData<List<T>>?) {
         items?.value?.let { itemList ->
             (recyclerView.adapter as? BaseRecyclerViewAdapter<T>)?.apply {
-                //clear()
-                //addData(itemList)
                 this.submitList(itemList)
             }
         }
@@ -35,6 +36,16 @@ object BindingAdapters {
                 if (view.visibility == View.VISIBLE)
                     view.fadeOut()
             }
+        }
+    }
+
+    @BindingAdapter("android:textInt")
+    @JvmStatic
+    fun setTextResource(textView: TextView, @StringRes text: Int) {
+        textView.text = try {
+            textView.context.getString(text)
+        } catch (_ : Exception) {
+            ""
         }
     }
 }

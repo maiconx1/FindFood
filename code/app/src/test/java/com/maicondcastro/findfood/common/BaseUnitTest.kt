@@ -12,7 +12,6 @@ import com.maicondcastro.findfood.network.repository.PlacesRemoteRepository
 import com.maicondcastro.findfood.places.placelist.PlaceListViewModel
 import com.maicondcastro.findfood.places.savedplaces.SavedPlacesViewModel
 import com.maicondcastro.findfood.utils.Constants
-import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.koin.android.ext.koin.androidContext
@@ -55,7 +54,6 @@ interface BaseUnitTest : KoinTest {
         }
 
         val networkModule = module {
-            single { MockWebServer() }
             single {
                 PlacesHttpClient.getClient()
             }

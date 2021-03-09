@@ -1,11 +1,8 @@
 package com.maicondcastro.findfood.network
 
 import com.maicondcastro.findfood.domain.models.Place
-import com.maicondcastro.findfood.utils.getDoubleOrNull
-import com.maicondcastro.findfood.utils.getIntOrNull
-import com.maicondcastro.findfood.utils.getJSONObjectOrNull
-import com.maicondcastro.findfood.utils.getStringOrNull
-import com.maicondcastro.findfood.utils.getBooleanOrNull
+import com.maicondcastro.findfood.domain.models.PlaceDetail
+import com.maicondcastro.findfood.utils.*
 import org.json.JSONObject
 
 fun parsePlacesJsonResult(jsonResult: JSONObject): ArrayList<Place> {
@@ -44,4 +41,43 @@ fun parsePlacesJsonResult(jsonResult: JSONObject): ArrayList<Place> {
     }
 
     return placeList
+}
+
+fun parsePlaceDetailsJsonResult(jsonResult: JSONObject): PlaceDetail? {
+    val placeJson = jsonResult.getJSONObject("result")
+
+    val placeId = placeJson.getStringOrNull("place_id") ?: return null // Shouldn't add to list if there is no place_id
+    val name = placeJson.getStringOrNull("name")
+    val rating = placeJson.getDoubleOrNull("rating")
+    val lat = placeJson.getJSONObjectOrNull("geometry")?.getJSONObject("location")
+        ?.getDoubleOrNull("lat")
+    val userRatingTotal = placeJson.getIntOrNull("user_ratings_total")
+    val vicinity = placeJson.getStringOrNull("vicinity")
+    val openNow = placeJson.getJSONObjectOrNull("opening_hours")?.getBooleanOrNull("open_now")
+    val lng = placeJson.getJSONObjectOrNull("geometry")?.getJSONObject("location")
+        ?.getDoubleOrNull("lng")
+    val businessStatus = placeJson.getStringOrNull("business_status")
+    val icon = placeJson.getStringOrNull("icon")
+    val weekdayText = placeJson.getJSONObjectOrNull("opening_hours")?.getStringArrayOrNull("weekday_text")
+    val url = placeJson.getStringOrNull("url")
+    val webSite = placeJson.getStringOrNull("website")
+
+
+
+
+    return PlaceDetail(
+        placeId,
+        name,
+        rating,
+        userRatingTotal,
+        vicinity,
+        openNow,
+        lat,
+        lng,
+        businessStatus,
+        icon,
+        weekdayText,
+        url,
+        webSite
+    )
 }

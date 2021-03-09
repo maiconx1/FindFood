@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.maicondcastro.findfood.places.PlaceItem" />
+            type="com.maicondcastro.findfood.places.models.PlaceItem" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -58,9 +58,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/spacing_medium"
                 android:layout_marginBottom="@dimen/spacing_smaller"
+                android:drawablePadding="@dimen/spacing_small"
                 android:gravity="center"
-                android:text="@{item.rating.toString()}"
+                android:text="@{item.ratingString}"
                 android:textSize="@dimen/text_size_small"
+                app:drawableStartCompat="@drawable/ic_star_rate"
                 app:layout_constraintBottom_toTopOf="@id/vicinity"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/name"

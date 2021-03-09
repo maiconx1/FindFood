@@ -3,6 +3,7 @@ package com.maicondcastro.findfood.places
 import androidx.recyclerview.widget.DiffUtil
 import com.maicondcastro.findfood.R
 import com.maicondcastro.findfood.base.BaseRecyclerViewAdapter
+import com.maicondcastro.findfood.places.models.PlaceItem
 
 class PlaceListAdapter(callBack: (selectedPlace: PlaceItem) -> Unit) :
     BaseRecyclerViewAdapter<PlaceItem>(callBack, PlaceDiffCallback()) {

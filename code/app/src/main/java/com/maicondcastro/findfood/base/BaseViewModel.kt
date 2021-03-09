@@ -15,6 +15,7 @@ abstract class BaseViewModel(app: Application) : AndroidViewModel(app) {
     val showSnackBar: SingleLiveEvent<String> = SingleLiveEvent()
     val showSnackBarAction: SingleLiveEvent<SnackBarAction> = SingleLiveEvent()
     var showNoData: MutableLiveData<Boolean> = MutableLiveData()
+    var openUrl: SingleLiveEvent<String> = SingleLiveEvent()
 
     data class SnackBarAction(
         @StringRes
