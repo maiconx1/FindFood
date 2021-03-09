@@ -12,17 +12,17 @@ class FakeDao : PlaceDao {
 
     var shouldReturnError = false
 
-    override fun insertAll(vararg place: PlaceDto) {
+    override suspend fun insertAll(vararg place: PlaceDto) {
         placeList.addAll(place)
     }
 
-    override fun update(vararg place: PlaceDto) {
+    override suspend fun update(vararg place: PlaceDto) {
         place.forEach {
             placeList[placeList.indexOf(it)] = it
         }
     }
 
-    override fun getPlaceById(placeId: String): PlaceDto? {
+    override suspend fun getPlaceById(placeId: String): PlaceDto? {
         return if(!shouldReturnError) {
             placeList.firstOrNull { it.placeId == placeId }
         } else {
@@ -30,19 +30,11 @@ class FakeDao : PlaceDao {
         }
     }
 
-    override fun deleteNotSaved() {
+    override suspend fun deleteNotSaved() {
         placeList.removeIf { !it.saved }
     }
 
-    override fun getPlacesLiveData(): LiveData<List<PlaceDto>> {
-        return if(!shouldReturnError) {
-            MutableLiveData(placeList)
-        } else {
-            throw Exception("error")
-        }
-    }
-
-    override fun getPlaces(): List<PlaceDto> {
+    override suspend fun getPlaces(): List<PlaceDto> {
         return if (!shouldReturnError) {
             placeList
         } else {
@@ -50,17 +42,7 @@ class FakeDao : PlaceDao {
         }
     }
 
-    override fun getSavedPlacesLiveData(): LiveData<List<PlaceDto>> {
-        return runBlocking {
-            if (!shouldReturnError) {
-                MutableLiveData(placeList.filter { it.saved })
-            } else {
-                throw Exception("error")
-            }
-        }
-    }
-
-    override fun getSavedPlaces(): List<PlaceDto> {
+    override suspend fun getSavedPlaces(): List<PlaceDto> {
         return if(!shouldReturnError) {
             placeList.filter { it.saved }
         } else {

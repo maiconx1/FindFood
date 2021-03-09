@@ -12,6 +12,7 @@ import com.maicondcastro.findfood.network.PlacesApiService
 import com.maicondcastro.findfood.network.PlacesHttpClient
 import com.maicondcastro.findfood.network.PlacesRemoteDataSource
 import com.maicondcastro.findfood.network.repository.PlacesRemoteRepository
+import com.maicondcastro.findfood.places.placelist.PlaceListViewModel
 import com.maicondcastro.findfood.places.savedplaces.SavedPlacesViewModel
 import com.maicondcastro.findfood.utils.Constants
 import org.junit.After
@@ -42,6 +43,13 @@ interface BaseTest : KoinTest {
                 )
             }
 
+            viewModel {
+                PlaceListViewModel(
+                    get(),
+                    get() as PlacesRemoteDataSource
+                )
+            }
+
             single(named("RealDao")) {
                 Room.inMemoryDatabaseBuilder(
                     androidContext(),
@@ -49,8 +57,8 @@ interface BaseTest : KoinTest {
                 ).build().placeDao }
 
             single<PlaceDao>(named("FakeDao")) { FakeDao() }
-            single<PlacesDataSource> { PlacesRepository(get(named("FakeDao"))) }
-            single { PlacesRepository(get()) }
+            single<PlacesDataSource> { PlacesRepository(get(named("RealDao"))) }
+            //single { PlacesRepository(get(named("RealDao"))) }
         }
 
         val networkModule = module {
@@ -82,7 +90,7 @@ interface BaseTest : KoinTest {
 
             single { get<Retrofit>().create(PlacesApiService::class.java) }
 
-            single<PlacesRemoteDataSource> { PlacesRemoteRepository(get(), get()) }
+            single<PlacesRemoteDataSource> { PlacesRemoteRepository(get(named("RealDao")), get()) }
         }
 
         startKoin {

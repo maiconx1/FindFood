@@ -1,7 +1,5 @@
 package com.maicondcastro.findfood.network.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import com.maicondcastro.findfood.database.PlaceDao
 import com.maicondcastro.findfood.database.dto.PlaceDto
 import com.maicondcastro.findfood.network.PlacesRemoteDataSource
@@ -19,16 +17,10 @@ class PlacesRemoteRepository(
     private val networkPlaces: PlacesApiService
 ) : PlacesRemoteDataSource {
 
-    override val places: LiveData<List<Place>> = Transformations.map(placeDao.getPlacesLiveData()) {
-        it.asDomain()
-    }
-
     override suspend fun getRemotePlaces(
         location: String,
         radius: String,
-        language: String,
-        types: String,
-        name: String
+        language: String
     ): List<Place> {
         var jsonPlaces: List<PlaceDto>
         withContext(Dispatchers.IO) {

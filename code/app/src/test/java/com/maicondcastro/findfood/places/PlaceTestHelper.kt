@@ -1,4 +1,4 @@
-package com.maicondcastro.findfood.network.repository
+package com.maicondcastro.findfood.places
 
 import com.maicondcastro.findfood.database.dto.PlaceDto
 

@@ -10,7 +10,6 @@ interface PlacesApiService {
             @Query("location") location: String,
             @Query("radius") radius: String,
             @Query("language") language: String = "en",
-            @Query("types") types: String = "",
-            @Query("name") name: String = ""
+            @Query("types") types: String = "bar|restaurant|cafe"
     ): Deferred<String>
 }

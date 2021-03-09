@@ -14,7 +14,10 @@
         android:id="@+id/placeCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_medium"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_smaller"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_smaller"
         android:fadeVisible="@{true}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +25,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium"
@@ -35,33 +38,54 @@
                 tools:text="ibis Sydney Darling Harbour" />
 
             <TextView
-                android:id="@+id/description"
-                android:layout_width="wrap_content"
+                android:id="@+id/vicinity"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
                 android:layout_marginBottom="@dimen/spacing_medium"
+                android:gravity="start"
                 android:text="@{item.vicinity}"
                 android:textSize="@dimen/text_size_small"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/title"
-                app:layout_constraintTop_toBottomOf="@id/title"
-                tools:text="Darling Harbour, 70 Murray Street, Pyrmont" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name"
+                tools:text="Darling Harbour, 70 Murray Street, Pyrmont la las ljasdlfalsfj aldfskjalds" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_smaller"
                 android:gravity="center"
                 android:text="@{item.rating.toString()}"
                 android:textSize="@dimen/text_size_small"
-                android:layout_marginEnd="@dimen/spacing_medium"
-                app:layout_constraintBottom_toBottomOf="@+id/description"
+                app:layout_constraintBottom_toTopOf="@id/vicinity"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/title"
-                tools:text="Location" />
+                app:layout_constraintTop_toTopOf="@+id/name"
+                tools:text="4.8" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_smaller"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:gravity="center"
+                android:text="@string/closed"
+                android:textColor="@color/black_CCCCCC"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold"
+                android:visibility="@{item.grayOut}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vicinity" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="#55CCCCCC"
+                android:background="@color/fade_background"
                 android:visibility="@{item.grayOut}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

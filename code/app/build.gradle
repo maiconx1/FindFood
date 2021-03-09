@@ -101,6 +101,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$version_glide"
 
     //Room
+    implementation "androidx.room:room-ktx:$version_room"
     implementation "androidx.room:room-runtime:$version_room"
     kapt "androidx.room:room-compiler:$version_room"
 
@@ -131,6 +132,7 @@ dependencies {
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     testImplementation "com.google.truth:truth:$truthVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "com.squareup.okhttp3:mockwebserver:4.7.2"
 
     // AndroidX Test - Instrumented testing
     androidTestImplementation "androidx.test:core-ktx:$version_androidx_test"

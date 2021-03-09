@@ -1,12 +1,21 @@
 package com.maicondcastro.findfood.places.savedplaces
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import com.maicondcastro.findfood.BuildConfig
+import com.maicondcastro.findfood.MainActivity
 import com.maicondcastro.findfood.R
 import com.maicondcastro.findfood.base.BaseFragment
+import com.maicondcastro.findfood.base.BaseViewModel
 import com.maicondcastro.findfood.base.NavigationCommand
 import com.maicondcastro.findfood.places.PlaceListAdapter
 import com.maicondcastro.findfood.databinding.FragmentSavedPlacesBinding
@@ -18,6 +27,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SavedPlacesFragment : BaseFragment() {
 
     override val viewModel: SavedPlacesViewModel by viewModel()
+
+    val mainActivity: MainActivity? by lazy {
+        activity as? MainActivity
+    }
 
     private lateinit var binding: FragmentSavedPlacesBinding
 
@@ -41,7 +54,7 @@ class SavedPlacesFragment : BaseFragment() {
         binding.lifecycleOwner = this
         setupRecyclerView()
         binding.findPlacesButton.setOnClickListener {
-            navigateToNearbyFood()
+            checkPermission()
         }
     }
 
@@ -64,5 +77,31 @@ class SavedPlacesFragment : BaseFragment() {
         }
 
         binding.savedList.setup(adapter)
+    }
+
+    private fun checkPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            navigateToNearbyFood()
+        } else {
+            mainActivity?.requestPermission(
+                { navigateToNearbyFood() },
+                {
+                    viewModel.showSnackBarAction.value = BaseViewModel.SnackBarAction(
+                        R.string.necessary_location_permission,
+                        R.string.settings
+                    ) {
+                        startActivity(Intent().apply {
+                            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                            data = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        })
+                    }
+                }
+            )
+        }
     }
 }

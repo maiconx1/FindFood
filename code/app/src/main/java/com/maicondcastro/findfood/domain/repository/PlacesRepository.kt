@@ -1,11 +1,8 @@
 package com.maicondcastro.findfood.domain.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import com.maicondcastro.findfood.database.PlaceDao
 import com.maicondcastro.findfood.domain.PlacesDataSource
 import com.maicondcastro.findfood.domain.models.Place
-import com.maicondcastro.findfood.utils.asDomain
 import com.maicondcastro.findfood.utils.asDomainModel
 import com.maicondcastro.findfood.utils.exceptions.PlaceNotFoundException
 import kotlinx.coroutines.Dispatchers

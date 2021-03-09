@@ -6,7 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.maicondcastro.findfood.common.*
 import com.maicondcastro.findfood.database.PlaceDao
 import com.maicondcastro.findfood.places.PlaceItem
-import com.maicondcastro.findfood.places.savedplaces.PlaceTestHelper.PLACE_DTO_SAVED
+import com.maicondcastro.findfood.places.PlaceTestHelper.PLACE_DTO_SAVED
 import com.maicondcastro.findfood.utils.asDomainModel
 import com.maicondcastro.findfood.utils.asItemModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -62,18 +62,19 @@ class SavedPlacesViewModelTest : BaseUnitTest {
 
     @Test
     fun loadSavedPlaces_successValues() {
-        fakeDao.insertAll(PLACE_DTO_SAVED)
+        runBlockingTest {
+            fakeDao.insertAll(PLACE_DTO_SAVED)
 
-        assertThat(viewModel.savedPlaces.value, `is`(nullValue()))
-        viewModel.loadSavedPlaces()
-        val places = listOf(PLACE_DTO_SAVED)
-        val dataList = ArrayList<PlaceItem>()
-        dataList.addAll(places.map { place ->
-            place.asDomainModel().asItemModel()
-        })
-        assertEquals(viewModel.savedPlaces.getOrAwaitValue(), dataList)
+            assertThat(viewModel.savedPlaces.value, `is`(nullValue()))
+            viewModel.loadSavedPlaces()
+            val places = listOf(PLACE_DTO_SAVED)
+            val dataList = ArrayList<PlaceItem>()
+            dataList.addAll(places.map { place ->
+                place.asDomainModel().asItemModel()
+            })
+            assertEquals(viewModel.savedPlaces.getOrAwaitValue(), dataList)
+        }
     }
-
 
 
     @Test
@@ -89,7 +90,6 @@ class SavedPlacesViewModelTest : BaseUnitTest {
     }
 
 
-
     @Test
     fun invalidateShowNoData_noData() {
         (fakeDao as FakeDao).shouldReturnError = true
@@ -99,9 +99,11 @@ class SavedPlacesViewModelTest : BaseUnitTest {
 
     @Test
     fun invalidateShowNoData_hasData() {
-        fakeDao.insertAll(PLACE_DTO_SAVED)
-        viewModel.loadSavedPlaces()
-        assertThat(viewModel.savedPlaces.getOrAwaitValue(), `is`(notNullValue()))
-        assertThat(viewModel.showNoData.getOrAwaitValue(), `is`(false))
+        runBlockingTest {
+            fakeDao.insertAll(PLACE_DTO_SAVED)
+            viewModel.loadSavedPlaces()
+            assertThat(viewModel.savedPlaces.getOrAwaitValue(), `is`(notNullValue()))
+            assertThat(viewModel.showNoData.getOrAwaitValue(), `is`(false))
+        }
     }
 }

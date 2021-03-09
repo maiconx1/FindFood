@@ -7,5 +7,6 @@ class Constants {
         const val PLACE_BUSINESS_CLOSED_PERMANENTLY = "CLOSED_PERMANENTLY"
 
         const val BASE_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/"
+        const val DEFAULT_MAX_DISTANCE = 500
     }
 }

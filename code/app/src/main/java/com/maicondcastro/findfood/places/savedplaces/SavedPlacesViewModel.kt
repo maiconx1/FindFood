@@ -20,13 +20,8 @@ class SavedPlacesViewModel(
         showLoading.value = true
         viewModelScope.launch {
             try {
-                //val list = MutableLiveData(listOf(Place("", null, null, null, null, null, null, null, null)))// dataSource.getSavedPlaces()
-                //val l = listOf(PlaceItem("", "Teste", 4.0, null, "Teste", true))
                 val list = dataSource.getSavedPlaces()
                 showLoading.postValue(false)
-                /*savedPlaces = Transformations.map(list) {
-                    it.asItem()
-                }*/
                 savedPlaces.value = list.map { it.asItemModel() }
             } catch (ex: Exception) {
                 showSnackBar.value = ex.message

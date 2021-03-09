@@ -4,5 +4,10 @@
     <string name="no_data">No data</string>
     <string name="saved_places">Saved places</string>
     <string name="nearby_food">Nearby food</string>
+    <string name="max_distance">Max distance (m)</string>
+    <string name="update">Update</string>
+    <string name="necessary_location_permission">Location permission is necessary for finding places</string>
+    <string name="settings">Settings</string>
+    <string name="closed">Closed</string>
 
 </resources>

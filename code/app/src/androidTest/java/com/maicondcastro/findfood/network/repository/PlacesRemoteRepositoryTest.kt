@@ -6,18 +6,18 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.maicondcastro.findfood.BaseTest
 import com.maicondcastro.findfood.database.PlaceDao
-import com.maicondcastro.findfood.getOrAwaitValue
+import com.maicondcastro.findfood.domain.PlacesDataSource
 import com.maicondcastro.findfood.network.PlacesRemoteDataSource
+import com.maicondcastro.findfood.network.repository.PlaceTestHelper.LOCATION
 import com.maicondcastro.findfood.network.repository.PlaceTestHelper.PLACE_DTO_SAVED
-import com.maicondcastro.findfood.utils.asDomainModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import org.hamcrest.CoreMatchers.not
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.core.Is.`is`
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.qualifier.named
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -25,8 +25,9 @@ import org.koin.test.inject
 @MediumTest
 class PlacesRemoteRepositoryTest : BaseTest {
 
-    private val repository: PlacesRemoteDataSource by inject()
-    private val placeDao: PlaceDao by inject()
+    private val remoteRepository: PlacesRemoteDataSource by inject()
+    private val localRepository: PlacesDataSource by inject()
+    private val placeDao: PlaceDao by inject(named("RealDao"))
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
@@ -39,7 +40,7 @@ class PlacesRemoteRepositoryTest : BaseTest {
             // Check if places list is empty before calling API
             assertThat(before.isEmpty(), `is`(true))
 
-            repository.getRemotePlaces(location = "-33.8670522,151.1957362", radius = "500")
+            remoteRepository.getRemotePlaces(location = LOCATION, radius = "500")
 
             val after = placeDao.getPlaces()
 
@@ -56,7 +57,7 @@ class PlacesRemoteRepositoryTest : BaseTest {
             // Check if places list is empty before calling API
             assertThat(before.isEmpty(), `is`(true))
 
-            repository.getRemotePlaces(location = "", radius = "")
+            remoteRepository.getRemotePlaces(location = "", radius = "")
 
             val after = placeDao.getPlaces()
 
@@ -76,7 +77,7 @@ class PlacesRemoteRepositoryTest : BaseTest {
 
             val savedPlace = before.first()
 
-            repository.getRemotePlaces(location = "-33.8670522,151.1957362", radius = "500")
+            remoteRepository.getRemotePlaces(location = LOCATION, radius = "500")
 
             val after = placeDao.getPlaces()
 
@@ -89,33 +90,39 @@ class PlacesRemoteRepositoryTest : BaseTest {
     @Test
     fun getRemotePlaces_successKeepSavedOnConflict() {
         runBlocking {
-            placeDao.insertAll(PLACE_DTO_SAVED)
-            val before = placeDao.getSavedPlaces()
+            remoteRepository.getRemotePlaces(location = LOCATION, radius = "500")
+
+            var before = placeDao.getPlaces()
+
+            localRepository.savePlace(before.first().placeId, true)
+
+            before = placeDao.getSavedPlaces()
 
             // Check if there is a saved place on DAO
-            assertThat(before.isEmpty(), `is`(false))
+            assertThat(before.none { it.saved }, `is`(false))
 
             val savedPlace = before.first()
 
-            repository.getRemotePlaces(location = "-33.8670522,151.1957362", radius = "500")
+            remoteRepository.getRemotePlaces(location = LOCATION, radius = "500")
 
             val after = placeDao.getPlaces()
 
             // Check if saved place is still on the list, was updated and keeps as saved
             val place = after.find { it.placeId == savedPlace.placeId }
             assertThat(place?.saved, `is`(true))
-            assertThat(place?.name, not(savedPlace.name))
+            assertThat(place?.name, `is`(savedPlace.name))
         }
     }
 
     @Test
     fun places_updatesLiveData() {
-        placeDao.insertAll(PLACE_DTO_SAVED)
+        runBlocking {
+            val value = remoteRepository.getRemotePlaces(
+                location = LOCATION,
+                radius = "500"
+            )
 
-        val liveData = repository.places
-
-        val value = liveData.getOrAwaitValue()
-
-        assertThat(value, `is`(listOf(PLACE_DTO_SAVED.asDomainModel())))
+            assertThat(value.isEmpty(), `is`(false))
+        }
     }
 }

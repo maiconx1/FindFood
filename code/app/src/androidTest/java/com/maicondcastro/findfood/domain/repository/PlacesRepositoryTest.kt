@@ -15,13 +15,14 @@ import org.hamcrest.CoreMatchers.not
 import org.hamcrest.core.Is.`is`
 import org.junit.Rule
 import org.junit.Test
+import org.koin.core.qualifier.named
 import org.koin.test.inject
 
 class PlacesRepositoryTest : BaseTest {
 
     private val repository: PlacesDataSource by inject()
 
-    private val dao: PlaceDao by inject()
+    private val dao: PlaceDao by inject(named("RealDao"))
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()

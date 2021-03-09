@@ -1,6 +1,7 @@
 package com.maicondcastro.findfood.base
 
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 
@@ -18,8 +19,9 @@ abstract class BaseFragment : Fragment() {
         viewModel.showSnackBar.observe(this, {
             Snackbar.make(this.requireView(), it, Snackbar.LENGTH_LONG).show()
         })
-        viewModel.showSnackBarInt.observe(this, {
-            Snackbar.make(this.requireView(), getString(it), Snackbar.LENGTH_LONG).show()
+        viewModel.showSnackBarAction.observe(this, {
+            Snackbar.make(this.requireView(), getString(it.message), Snackbar.LENGTH_LONG)
+                .setAction(it.btnText, it.action).show()
         })
 
         viewModel.navigationCommand.observe(this, { command ->
