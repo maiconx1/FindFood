@@ -129,13 +129,15 @@ class PlaceDetailFragment : BaseFragment(), OnMapReadyCallback {
             if (lat != 0.0 && lng != 0.0) {
                 map.addMarker(MarkerOptions().position(LatLng(lat, lng)).title(it.name))
                 val zoomLevel = 15f
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lng), zoomLevel))
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lng), zoomLevel))
             }
             mapFragment?.view?.visibility = View.VISIBLE
 
             Glide.with(requireContext())
                 .load(it.icon)
                 .into(binding.icon)
+
+            binding.motionLayout.transitionToEnd()
         })
 
         viewModel.followButtonSaved.observe(viewLifecycleOwner, {

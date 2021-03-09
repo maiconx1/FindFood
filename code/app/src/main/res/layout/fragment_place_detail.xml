@@ -10,9 +10,11 @@
             type="com.maicondcastro.findfood.places.placedetails.PlaceDetailsViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motion_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layoutDescription="@xml/motion_detail"
         tools:context="com.maicondcastro.findfood.places.savedplaces.SavedPlacesFragment">
 
         <androidx.cardview.widget.CardView
@@ -44,8 +46,8 @@
                     android:id="@+id/icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:fadeVisible="@{viewModel.placeItem.hasIcon}"
                     android:contentDescription="@string/description_icon"
+                    android:fadeVisible="@{viewModel.placeItem.hasIcon}"
                     app:layout_constraintBottom_toBottomOf="@id/name"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/name" />
@@ -177,7 +179,6 @@
             android:layout_marginTop="@dimen/spacing_medium"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:layout_marginBottom="@dimen/spacing_medium"
-            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/follow_place_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -188,11 +189,11 @@
             android:id="@+id/follow_place_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fadeVisible="@{viewModel.loadedPlace}"
+            android:text="@string/follow_place"
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:layout_marginBottom="@dimen/spacing_medium"
-            android:fadeVisible="@{viewModel.loadedPlace}"
-            android:text="@string/follow_place"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -208,5 +209,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
