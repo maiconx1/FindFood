@@ -39,13 +39,18 @@ class PlaceDetailFragment : BaseFragment(), OnMapReadyCallback {
 
     private val args: PlaceDetailFragmentArgs by navArgs()
 
+    private var hasLocationArg: Boolean = false
+
     private var locationListener: LocationListener = LocationListener { location ->
         val latitude = location.latitude
         val longitude = location.longitude
 
         updateLocation(latitude, longitude)
         viewModel.showLoading.value = false
-        loadDetails()
+
+        if (!hasLocationArg) {
+            loadDetails()
+        }
     }
 
     private var mapFragment: SupportMapFragment? = null
@@ -58,6 +63,10 @@ class PlaceDetailFragment : BaseFragment(), OnMapReadyCallback {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_place_detail, container, false)
         viewModel.placeId = args.placeId
+        if (args.lat != 0f && args.lng != 0f) {
+            hasLocationArg = true
+            viewModel.updateLatLng(args.lat.toDouble(), args.lng.toDouble())
+        }
         binding.viewModel = viewModel
 
         setDisplayHomeAsUpEnabled(true)
@@ -156,5 +165,8 @@ class PlaceDetailFragment : BaseFragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         startLocationListener()
+        if (hasLocationArg) {
+            loadDetails()
+        }
     }
 }

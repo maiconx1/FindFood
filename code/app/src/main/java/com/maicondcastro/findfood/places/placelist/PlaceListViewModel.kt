@@ -18,8 +18,8 @@ class PlaceListViewModel(
     var places = MutableLiveData<List<PlaceItem>>()
     val maxDistance = MutableLiveData(DEFAULT_MAX_DISTANCE.toString())
 
-    private var lat: Double? = null
-    private var lng: Double? = null
+    var lat: Double? = null
+    var lng: Double? = null
 
     fun loadPlaces() {
         try {

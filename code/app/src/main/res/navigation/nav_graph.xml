@@ -34,5 +34,11 @@
         <argument
             android:name="placeId"
             app:argType="string" />
+        <argument
+            android:name="lat"
+            app:argType="float" />
+        <argument
+            android:name="lng"
+            app:argType="float" />
     </fragment>
 </navigation>

@@ -24,8 +24,8 @@ class PlaceDetailsViewModel(
     private val dataSource: PlacesDataSource,
 ) : BaseViewModel(app) {
 
-    private var lat: Double? = null
-    private var lng: Double? = null
+    var lat: Double? = null
+    var lng: Double? = null
 
     var placeItem = MutableLiveData<PlaceDetailItem>()
 

@@ -76,7 +76,7 @@ class SavedPlacesFragment : BaseFragment() {
             viewModel.navigationCommand.postValue(
                 NavigationCommand.To(
                     SavedPlacesFragmentDirections.actionSavedPlacesFragmentToPlaceDetailFragment(
-                        it.placeId
+                        it.placeId, 0f, 0f
                     )
                 )
             )

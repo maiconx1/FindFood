@@ -117,7 +117,7 @@ class PlaceListFragment : BaseFragment() {
             viewModel.navigationCommand.postValue(
                 NavigationCommand.To(
                     PlaceListFragmentDirections.actionPlaceListFragmentToPlaceDetailFragment(
-                        it.placeId
+                        it.placeId, viewModel.lat?.toFloat() ?: 0f, viewModel.lng?.toFloat() ?: 0f
                     )
                 )
             )
