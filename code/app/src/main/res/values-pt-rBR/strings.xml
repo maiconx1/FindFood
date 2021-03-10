@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Buscar comida</string>
+    <string name="find_nearby_food">Buscar comida próxima!</string>
+    <string name="no_data">Sem informações</string>
+    <string name="saved_places">Lugares salvos</string>
+    <string name="nearby_food">Comidas próximas</string>
+    <string name="max_distance">Distância máxima (m)</string>
+    <string name="update">Atualizar</string>
+    <string name="necessary_location_permission">Permissão de localização é necessária para buscar locais</string>
+    <string name="settings">Configurações</string>
+    <string name="closed">Fechado</string>
+    <string name="follow_place">Seguir lugar</string>
+    <string name="unfollow_place">Deixar de seguir</string>
+    <string name="open_now">Aberto agora</string>
+    <string name="check_on_maps">Ver no Google Maps</string>
+    <string name="check_website">Abrir site</string>
+    <string name="description_icon">Ícone do lugar</string>
+</resources>

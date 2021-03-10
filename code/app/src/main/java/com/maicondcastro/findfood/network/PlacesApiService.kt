@@ -15,6 +15,7 @@ interface PlacesApiService {
 
     @GET("details/json")
     fun getPlaceDetailAsync(
-            @Query("place_id") placeId: String
+            @Query("place_id") placeId: String,
+            @Query("language") language: String = "en"
     ): Deferred<String>
 }

@@ -9,6 +9,7 @@ import com.maicondcastro.findfood.places.models.PlaceItem
 import com.maicondcastro.findfood.utils.Constants.Companion.DEFAULT_MAX_DISTANCE
 import com.maicondcastro.findfood.utils.asItem
 import kotlinx.coroutines.launch
+import java.util.*
 
 class PlaceListViewModel(
     app: Application,
@@ -59,7 +60,7 @@ class PlaceListViewModel(
         val lat: Double?,
         val lng: Double?,
         val radius: Int?,
-        val language: String = "en"
+        val language: String = Locale.getDefault().language
     ) {
         fun checkValid(): QueryItems? =
             if (lat != null && lng != null && radius != null) this else null

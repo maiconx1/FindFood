@@ -26,7 +26,7 @@ class PlacesRemoteRepository(
     ): List<Place> {
         var jsonPlaces: List<PlaceDto>
         withContext(Dispatchers.IO) {
-            val places = networkPlaces.getNearbyPlacesAsync(location, radius).await()
+            val places = networkPlaces.getNearbyPlacesAsync(location, radius, language).await()
 
             placeDao.deleteNotSaved()
             jsonPlaces = parsePlacesJsonResult(JSONObject(places)).asDatabase()
@@ -46,7 +46,7 @@ class PlacesRemoteRepository(
     ): PlaceDetail? {
         var json: PlaceDetail?
         withContext(Dispatchers.IO) {
-            val places = networkPlaces.getPlaceDetailAsync(placeId).await()
+            val places = networkPlaces.getPlaceDetailAsync(placeId, language).await()
             json = parsePlaceDetailsJsonResult(JSONObject(places))
         }
         return json

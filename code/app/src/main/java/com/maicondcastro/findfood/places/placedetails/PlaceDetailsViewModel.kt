@@ -16,6 +16,7 @@ import com.maicondcastro.findfood.utils.Utils.calculateDistance
 import com.maicondcastro.findfood.utils.asDetailItemModel
 import com.maicondcastro.findfood.utils.asItemModel
 import kotlinx.coroutines.launch
+import java.util.*
 import kotlin.math.pow
 
 class PlaceDetailsViewModel(
@@ -52,7 +53,7 @@ class PlaceDetailsViewModel(
                     _followButtonSaved.value = it.saved
                 }
 
-                val place = remoteDataSource.getPlaceDetails(placeId)
+                val place = remoteDataSource.getPlaceDetails(placeId, Locale.getDefault().language)
                 showLoading.postValue(false)
                 placeItem.value = place?.asItemModel()
                 loadedPlace.value = true
