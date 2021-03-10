@@ -6,12 +6,12 @@ Using Find Food you can find and save locally nearby Cafes, Bars and Restaurants
 
 To run this project you need to get API key from [Places API](https://developers.google.com/maps/documentation/places/web-service/overview?hl=vi) and from [Maps SDK](https://developers.google.com/maps/documentation/android-sdk/overview) and store them on Environment Variables
 
-*MacOS
+* MacOS
 ```
 export PLACES_API_KEY=[YOUR_PLACES_API_KEY]
 export MAPS_API_KEY=[YOUR_MAPS_SDK_KEY]
 ```
-*Windows
+* Windows
 ```
 setx PLACES_API_KEY [YOUR_PLACES_API_KEY]
 setx MAPS_API_KEY [YOUR_MAPS_SDK_KEY]
