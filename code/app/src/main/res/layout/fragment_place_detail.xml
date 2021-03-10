@@ -55,15 +55,16 @@
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_height="0dp"
                     android:layout_marginStart="@dimen/spacing_small"
                     android:text="@{viewModel.placeItem.name}"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_large"
+                    android:textSize="@dimen/text_size_larger"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/rating"
                     app:layout_constraintEnd_toStartOf="@id/rating"
                     app:layout_constraintStart_toEndOf="@id/icon"
-                    app:layout_constraintTop_toTopOf="@id/rating"
+                    app:layout_constraintTop_toTopOf="@id/open"
                     tools:text="Chama App" />
 
                 <TextView
@@ -73,7 +74,6 @@
                     android:layout_marginTop="8dp"
                     android:fadeVisible="@{viewModel.placeItem.ratingString.length() > 0}"
                     android:text="@{viewModel.placeItem.ratingString}"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"
                     app:drawableStartCompat="@drawable/ic_star_rate"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -86,10 +86,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_small"
                     android:text="@{viewModel.placeItem.vicinity}"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/name"
+                    app:layout_constraintTop_toBottomOf="@id/rating"
                     tools:text="Egelantiersgracht 390, 1015 RR Amsterdam, Netherlands" />
 
                 <TextView
@@ -99,7 +98,6 @@
                     android:layout_marginTop="@dimen/spacing_small"
                     android:drawablePadding="@dimen/spacing_small"
                     android:text="@{viewModel.distanceString}"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/text_size_small"
                     app:drawableStartCompat="@drawable/ic_place"
                     app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +121,6 @@
                     android:layout_marginTop="@dimen/spacing_large"
                     android:fadeVisible="@{viewModel.placeItem.weekString.length() > 0}"
                     android:text="@{viewModel.placeItem.weekString}"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/text_size_small"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/distance"
@@ -146,7 +143,6 @@
                     android:drawablePadding="@dimen/spacing_small"
                     android:fadeVisible="@{viewModel.placeItem.hasMapUrl}"
                     android:text="@string/check_on_maps"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/text_size_small"
                     app:drawableStartCompat="@drawable/ic_map"
                     app:layout_constraintStart_toStartOf="parent"
@@ -189,11 +185,11 @@
             android:id="@+id/follow_place_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fadeVisible="@{viewModel.loadedPlace}"
-            android:text="@string/follow_place"
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:layout_marginBottom="@dimen/spacing_medium"
+            android:fadeVisible="@{viewModel.loadedPlace}"
+            android:text="@string/follow_place"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -31,7 +31,6 @@
                 android:layout_marginStart="@dimen/spacing_medium"
                 android:layout_marginTop="@dimen/spacing_medium"
                 android:text="@{item.name}"
-                android:textColor="@color/black"
                 android:textSize="@dimen/text_size_normal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
