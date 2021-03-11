@@ -78,7 +78,6 @@ class PlaceDetailFragment : BaseFragment(), OnMapReadyCallback {
         mapFragment =
             childFragmentManager.findFragmentById(R.id.location_map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
-        mapFragment?.view?.visibility = View.GONE
 
         return binding.root
     }
@@ -131,24 +130,6 @@ class PlaceDetailFragment : BaseFragment(), OnMapReadyCallback {
             }
         }
 
-        viewModel.placeItem.observe(viewLifecycleOwner, {
-            val lat = it.lat ?: 0.0
-            val lng = it.lng ?: 0.0
-
-            if (lat != 0.0 && lng != 0.0) {
-                map.addMarker(MarkerOptions().position(LatLng(lat, lng)).title(it.name))
-                val zoomLevel = 15f
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lng), zoomLevel))
-            }
-            mapFragment?.view?.visibility = View.VISIBLE
-
-            Glide.with(requireContext())
-                .load(it.icon)
-                .into(binding.icon)
-
-            binding.motionLayout.transitionToEnd()
-        })
-
         viewModel.followButtonSaved.observe(viewLifecycleOwner, {
             binding.followPlaceButton.text = if (it) {
                 getString(R.string.unfollow_place)
@@ -168,5 +149,22 @@ class PlaceDetailFragment : BaseFragment(), OnMapReadyCallback {
         if (hasLocationArg) {
             loadDetails()
         }
+        viewModel.placeItem.observe(viewLifecycleOwner, {
+            val lat = it.lat ?: 0.0
+            val lng = it.lng ?: 0.0
+
+            if (lat != 0.0 && lng != 0.0) {
+                map.addMarker(MarkerOptions().position(LatLng(lat, lng)).title(it.name))
+                val zoomLevel = 15f
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lng), zoomLevel))
+            }
+            mapFragment?.view?.visibility = View.VISIBLE
+
+            Glide.with(requireContext())
+                .load(it.icon)
+                .into(binding.icon)
+
+            binding.motionLayout.transitionToEnd()
+        })
     }
 }

@@ -22,10 +22,11 @@
             android:id="@+id/card"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/spacing_medium"
             android:background="?attr/colorSurface"
             android:fadeVisible="@{viewModel.loadedPlace}"
-            app:layout_constraintBottom_toBottomOf="@id/map"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/follow_place_button"
+            app:layout_constraintEnd_toStartOf="@id/location_map"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +60,7 @@
             android:layout_marginStart="@dimen/spacing_small"
             android:gravity="center_vertical"
             android:text="@{viewModel.placeItem.name}"
-            android:textSize="@dimen/text_size_larger"
+            android:textSize="@dimen/text_size_large"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/rating"
             app:layout_constraintEnd_toStartOf="@id/rating"
@@ -71,7 +72,7 @@
             android:id="@+id/rating"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_smaller"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:fadeVisible="@{viewModel.placeItem.ratingString.length() > 0}"
             android:text="@{viewModel.placeItem.ratingString}"
@@ -88,92 +89,71 @@
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_small"
             android:text="@{viewModel.placeItem.vicinity}"
-            android:textSize="@dimen/text_size_normal"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toEndOf="@id/card"
             app:layout_constraintStart_toStartOf="@id/card"
             app:layout_constraintTop_toBottomOf="@id/rating"
             tools:text="Egelantiersgracht 390, 1015 RR Amsterdam, Netherlands" />
-
-        <TextView
-            android:id="@+id/distance"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_medium"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:drawablePadding="@dimen/spacing_small"
-            android:text="@{viewModel.distanceString}"
-            android:textSize="@dimen/text_size_small"
-            app:drawableStartCompat="@drawable/ic_place"
-            app:layout_constraintStart_toStartOf="@id/card"
-            app:layout_constraintTop_toBottomOf="@id/vicinity"
-            tools:text="30m" />
 
         <View
             android:id="@+id/week_divider_top"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginStart="@dimen/spacing_medium"
-            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="#CCCCCC"
             android:fadeVisible="@{viewModel.placeItem.weekString.length() > 0}"
             app:layout_constraintEnd_toEndOf="@id/card"
             app:layout_constraintStart_toStartOf="@id/card"
-            app:layout_constraintTop_toBottomOf="@id/distance" />
+            app:layout_constraintTop_toBottomOf="@id/vicinity" />
 
         <TextView
             android:id="@+id/week"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_medium"
-            android:layout_marginTop="@dimen/spacing_large"
+            android:layout_marginTop="@dimen/spacing_medium"
             android:fadeVisible="@{viewModel.placeItem.weekString.length() > 0}"
             android:text="@{viewModel.placeItem.weekString}"
             android:textSize="@dimen/text_size_small"
             app:layout_constraintStart_toStartOf="@id/card"
-            app:layout_constraintTop_toBottomOf="@id/distance"
+            app:layout_constraintTop_toBottomOf="@id/vicinity"
             tools:text="Monday: 5:15 PM – 1:15 AM\nTuesday: 5:15 PM – 1:15 AM\nWednesday: 5:15 PM – 1:15 AM\nThursday: 5:15 PM – 1:15 AM\nFriday: 5:15 PM – 1:15 AM\nSaturday: Closed\nSunday: Closed" />
-
-        <View
-            android:id="@+id/week_divider_bottom"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginStart="@dimen/spacing_medium"
-            android:layout_marginTop="@dimen/spacing_medium"
-            android:layout_marginEnd="@dimen/spacing_medium"
-            android:background="#CCCCCC"
-            app:layout_constraintEnd_toEndOf="@id/card"
-            app:layout_constraintStart_toStartOf="@id/card"
-            app:layout_constraintTop_toBottomOf="@id/week" />
 
         <TextView
             android:id="@+id/map"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_medium"
             android:layout_marginBottom="@dimen/spacing_medium"
             android:drawablePadding="@dimen/spacing_small"
             android:fadeVisible="@{viewModel.placeItem.hasMapUrl}"
-            android:paddingBottom="@dimen/spacing_medium"
             android:text="@string/check_on_maps"
             android:textSize="@dimen/text_size_small"
             app:drawableStartCompat="@drawable/ic_map"
-            app:layout_constraintStart_toStartOf="@id/card"
-            app:layout_constraintTop_toBottomOf="@id/week" />
+            app:layout_constraintBottom_toTopOf="@id/site"
+            app:layout_constraintEnd_toEndOf="@id/card"
+            app:layout_constraintStart_toEndOf="@id/week"
+            app:layout_constraintTop_toTopOf="@id/week"
+            app:layout_goneMarginStart="@dimen/spacing_small" />
 
         <TextView
             android:id="@+id/site"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:fadeVisible="@{viewModel.placeItem.hasWebSite}"
             android:gravity="end"
             android:text="@string/check_website"
             android:textColor="@color/link"
             android:textSize="@dimen/text_size_small"
+            app:layout_constraintBottom_toBottomOf="@id/week"
             app:layout_constraintEnd_toEndOf="@id/card"
-            app:layout_constraintStart_toEndOf="@id/map"
-            app:layout_constraintTop_toTopOf="@id/map" />
+            app:layout_constraintStart_toEndOf="@id/week"
+            app:layout_constraintTop_toBottomOf="@id/map" />
 
         <fragment
             android:id="@+id/location_map"
@@ -184,8 +164,8 @@
             android:layout_marginBottom="@dimen/spacing_medium"
             app:layout_constraintBottom_toTopOf="@id/follow_place_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card"
+            app:layout_constraintStart_toEndOf="@id/card"
+            app:layout_constraintTop_toTopOf="parent"
             tools:context=".SelectLocationFragment" />
 
         <Button
@@ -213,7 +193,7 @@
             android:id="@+id/group"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:constraint_referenced_ids="open,icon,name,rating,vicinity,distance,week_divider_top,week,week_divider_bottom,map,site" />
+            app:constraint_referenced_ids="open,icon,name,rating,vicinity,distance,week_divider_top,week,map,site" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
